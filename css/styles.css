@@ -20,6 +20,7 @@
     --shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); /* Тень для карточек "Наша команда"*/
     --shadow-hero-button: 0px 4px 4px 0px #00000026; /* Тень кнопки hero */
     --shadow-filter-button: 0px 2px 2px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.08), 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
+    --shadow-modal: 0px 2px 1px 0px #00000033, 0px 1px 1px 0px #00000024, 0px 1px 3px 0px #0000001F;
     --shadow-gallery: 0px 2px 2px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.08), 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
 
 
@@ -93,7 +94,7 @@ img {       /*Убираем зазор под изображением, огр�
 /* -----------------ШАПКА (HEADER)-------------------- */
 .header {
     position: fixed;
-    z-index: 8;
+    z-index: 7;
     top: 0;
     left: 0;
 
@@ -149,12 +150,28 @@ img {       /*Убираем зазор под изображением, огр�
     display: block;
     padding-top: 32px;
     padding-bottom: 32px;
+
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.current::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    display: inline-block;
+
+    content: "";
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--accent-color);
+}
 
 .site-nav-link.current {
     color: var(--accent-color);
 }
+
 .contacts-nav {
     display: flex;
 }
@@ -172,6 +189,8 @@ img {       /*Убираем зазор под изображением, огр�
     display: inline-flex;
     padding-top: 32px;
     padding-bottom: 32px;
+
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .contacts-nav-icon-mail {
     width: 16px;
@@ -179,6 +198,8 @@ img {       /*Убираем зазор под изображением, огр�
     margin-right: 10px;
     fill: var(--main-color);
     align-self: center;
+
+    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .contacts-nav-icon-phone {
     width: 10px;
@@ -186,6 +207,8 @@ img {       /*Убираем зазор под изображением, огр�
     margin-right: 10px;
     fill: var(--main-color);;
     align-self: center;
+
+    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .site-nav-link:hover, .site-nav-link:focus, .contacts-nav-link:hover, .contacts-nav-link:focus {
@@ -258,6 +281,61 @@ img {       /*Убираем зазор под изображением, огр�
     box-shadow: var(--shadow-hero-button);
 }
 
+
+/* -------------------- Модальное окно--------------------- */
+.backdrop { /*overlay модального окна*/
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 8;
+
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.backdrop.is-hidden {  /*Скрывает модальное окно*/
+    opacity: 0;
+    pointer-events: none; /*позволяет производить действия через слой модального окна*/
+    visibility: hidden;
+}
+.modal {  /*модальное окно*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /*Позиционирование модального окна по центру, относительно backdrop*/
+    z-index: 9;
+
+    min-width: 528px;
+    min-height: 581px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-modal);
+    background-color: var(--brand-white-color);
+}
+
+
+.modal-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 2;
+
+    display: flex;
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    border-color: rgba(0, 0, 0, 0,1);
+    border-width: 1px;
+    border-style: solid;
+    justify-content: center;
+    align-items: center;
+}
+.modal-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--logo-black-color);
+}
+
 /* ------------------СЕКЦИЯ ОСОБЕННОСТИ-------------------- */
 .section.features-padding {
     padding-bottom: 0;
@@ -311,6 +389,28 @@ img {       /*Убираем зазор под изображением, огр�
 .work-item {
     flex-basis: calc(100% / 3 - var(--item-gap)); /*----calc((100% / кол-во элементов в строке - значение марджина)----*/
     margin-right: var(--item-gap);
+}
+.work-thumb {
+    display: block;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+.work-text {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    
+    font-size: 14px;
+    line-height: 1.14;
+    color: var(--brand-white-color);
+
+    width: 100%;
+    padding-top: 27px;
+    padding-bottom: 27px;
+    margin-bottom: 0;
+    background-color: rgba(47, 48, 58, 0.8);
 }
 
 /* ------------------СЕКЦИЯ НАША КОМАНДА -------------------*/
@@ -377,12 +477,16 @@ img {       /*Убираем зазор под изображением, огр�
     border-radius: 50%;
     justify-content: center;
     align-items: center;
+
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .team-icon {
     width: 20px;
     height: 20px;
     fill: var(--icon-color);
+
+    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .team-link-item:hover, .team-link-item:focus {
@@ -417,11 +521,15 @@ img {       /*Убираем зазор под изображением, огр�
     border-radius: 4px;
     justify-content: center;
     align-items: center;
+
+    transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .client-icon {
     width: 106px;
     height: 60px;
     fill: var(--icon-color);
+
+    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .client-box:hover, .client-box:focus {
@@ -468,6 +576,10 @@ img {       /*Убираем зазор под изображением, огр�
     border-top-right-radius: 4px;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn:hover, .btn:focus {
     color: var(--brand-white-color);
@@ -489,6 +601,32 @@ img {       /*Убираем зазор под изображением, огр�
     flex-basis: calc(100% / 3 - var(--item-gap)); /*----calc((100% / кол-во элементов в строке - значение марджина)----*/
     margin-right: var(--item-gap);
     margin-bottom: var(--item-gap);
+}
+
+.gallery-thumb {
+    position: relative;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+.gallery-text {
+    position: absolute;
+    left: 0;
+    top: 100%;
+
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    line-height: 1.56;
+    text-align: left;
+    color: var(--brand-white-color);
+    padding: 24px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(33, 150, 243, 0.9);
+    z-index: 9;
+
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gallery-card {
@@ -514,10 +652,15 @@ img {       /*Убираем зазор под изображением, огр�
 }
 .gallery-link {
     display: block;
+
+    transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .gallery-link:hover, .gallery-link:focus{
     box-shadow: var(--shadow-gallery);
     cursor: pointer;
+}
+.gallery-link:hover .gallery-text, .gallery-link:focus .gallery-text {
+    transform: translateY(-100%);
 }
 
 /* --------------------ПОДВАЛ (FOOTER)--------------------- */
@@ -555,6 +698,8 @@ img {       /*Убираем зазор под изображением, огр�
     font-size: 14px;
     line-height: 1.19;
     letter-spacing: 0.03em;
+
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .link-contacts {
     color: var(--mail-footer-color);
@@ -563,6 +708,8 @@ img {       /*Убираем зазор под изображением, огр�
     font-size: 14px;
     line-height: 1.71;
     letter-spacing: 0.03em;
+
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link-adress:hover, .link-adress:focus, .link-contacts:hover, .link-contacts:focus {
@@ -583,6 +730,8 @@ img {       /*Убираем зазор под изображением, огр�
 }
 .team-link-item.footer-link {
     background-color: rgba(255, 255, 255, 0.1);
+
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .footer-icon {
     fill: var(--brand-white-color);

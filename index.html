@@ -76,10 +76,21 @@
                         <h1 class="hero-title">Эффективные решения <br> для вашего бизнеса</h1>
                     </div>
                     
-                    <button type="button" class="hero-button">Заказать услугу</button>
+                    <button type="button" class="hero-button" data-modal-open>Заказать услугу</button>
                 </div>
             </section>
         
+    <!----------------------- Модальное окно--------------------- -->
+    <div class="backdrop is-hidden" data-modal>
+        <div class="modal">
+            <button data-modal-close type="button" class="modal-button">
+            <svg class="modal-icon">
+                <use href="./img/cross.svg#icon-close-black"></use>
+            </svg>
+            </button>
+        </div>
+    </div>
+
     <!-----------------------СЕКЦИЯ ОСОБЕННОСТИ---------------------------->
         <section class="section features-padding">
             <div class="conteiner">
@@ -137,15 +148,24 @@
 
                 <ul class="work list-none">
                     <li class="work-item">
-                        <img src="./img/img_a.jpg" alt="Веб разработка">
+                        <div class="work-thumb">
+                            <img src="./img/img_a.jpg" alt="Веб разработка">
+                            <h3 class="section-title work-text">ДЕСКТОПНЫЕ ПРИЛОЖЕНИЯ</h3>
+                        </div>
                     </li>
 
                     <li class="work-item">
-                        <img src="./img/img_b.jpg" alt="Мобильные приложения">
+                        <div class="work-thumb">
+                            <img src="./img/img_b.jpg" alt="Мобильные приложения">
+                            <h3 class="section-title work-text">МОБИЛЬНЫЕ ПРИЛОЖЕНИЯ</h3>
+                        </div>
                     </li>
 
                     <li class="work-item">
-                        <img src="./img/img_c.jpg" alt="Дизайн">
+                        <div class="work-thumb">
+                            <img src="./img/img_c.jpg" alt="Дизайн">
+                            <h3 class="section-title work-text">ДИЗАЙНЕРСКИЕ РЕШЕНИЯ</h3>
+                        </div>
                     </li>
                 </ul>
 
